@@ -248,7 +248,7 @@ var lyrics = getCookie("lyrics").split("\\").join("\n")
  })
 
  function toggleFullscreenELementVisibility() {
-     if (!window.fullScreen) {
+     if (document.fullscreenElement == null && !window.fullScreen) {
          var fullScreenElements = document.getElementsByClassName("fullScreenElement")
          for (var i = 0; i < fullScreenElements.length; i++) {
              fullScreenElements[i].classList.remove("hideFullScreen")
