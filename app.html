@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="preconnect" href="https://rsms.me/">
+        <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+        <link rel="icon" type="image/x-icon" href="favicon.svg">
+        <style>
+         body {
+             background-color: #f6145eff;
+             overflow: hidden;
+         }
+         .container {
+             background-color: #f6145eff;
+             width: 100%;
+             margin: 0px;
+             display: flex;
+             align-items: center;
+             justify-content: center;
+             flex-direction: column;
+         }
+
+         #lyrics {
+             width: 90%;
+             margin-top: 50vh;
+             margin-bottom: 50vh;
+         }
+         .lyrics {
+             font-family: Inter, sans-serif;
+             height: 1rem;
+             font-size: 1rem;
+             color: white;
+             font-weight: bold;
+             opacity: 30%;
+             user-select: none;
+             -webkit-user-select: none;
+             -ms-user-select: none;
+         }
+         .activated-lyrics {
+             align-items: center;
+             font-size: 1.5rem;
+             height: 1.5rem;
+             opacity: 100%;
+             margin-top: 1rem;
+             margin-bottom: 1rem;
+         }
+         .hideFullScreen {
+             visibility: hidden;
+         }
+         #navbar {
+             display: flex;
+             position: fixed;
+             justify-content: space-between;
+             align-items: center;
+             font-size: 1.1rem;
+             color: white;
+             width: 100%;
+             height: 3rem;
+             background-color: #000000;
+             top: 0px;
+             font-family: Inter, sans-serif;
+         }
+         #fullScreenButton {
+             height: 4rem;
+             width: 4rem;
+             position: fixed;
+             right: 5%;
+             bottom: 10%;
+             border-radius: 100%;
+             background-color: #00000000;
+         }
+         #fullScreenButton > button {
+             width: 100%;
+             height: 100%;
+             background-color: yellow;
+             border-radius: 100%;
+             border-color: #00000000;
+             display: flex;
+             align-items: center;
+             justify-content: center;
+         }
+         #fullScreenButton > button:hover {
+             background-color: #EEEE00;
+         }
+         #navbarLeft {
+             align-items: center;
+             display: flex;
+         }
+         #navbarLeft > a {
+             margin-left: 1rem;
+             display: block;
+             width: 1.5rem;
+             align-items: center;
+             height: 1.5rem;
+             margin-bottom: 3.6px
+         }
+         #lyricNav {
+             position: fixed;
+             width: 100%;
+             bottom: 0px;
+             height: 2rem;
+             display: flex;
+             justify-content: space-around;
+             background-color: black;
+         }
+
+         #lyricNav > button {
+             width: 50%;
+             background-color: #00000000;
+             border-color: #00000000;
+         }
+         #lyricNav > button:hover {
+             background-color: #111111;
+         }
+         #lyricNav > button > svg {
+             width: 1rem;
+         }
+        </style>
+    </head>
+    <body>
+    <div class="container" id="container" >
+        <div id="navbar" class="fullScreenElement">
+            <div id="navbarLeft">
+                <a href="/"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="#ffffff" d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.2 288 416 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-306.7 0L214.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg> </a>
+            </div>
+
+            <div id="navbarCenter">
+                Enter fullscreen to remove all the UI elements
+            </div>
+
+            <div id="navbarRight">
+            </div>
+        </div>
+
+        <div id="lyrics" onclick="goToNextLyrics()">
+        </div>
+
+        <div id="fullScreenButton" class="fullScreenElement" onclick="document.documentElement.requestFullscreen()">
+            <button onclick="document.documentElement.requestFullscreen()"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" style="width: 60%;"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M32 32C14.3 32 0 46.3 0 64l0 96c0 17.7 14.3 32 32 32s32-14.3 32-32l0-64 64 0c17.7 0 32-14.3 32-32s-14.3-32-32-32L32 32zM64 352c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 96c0 17.7 14.3 32 32 32l96 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-64 0 0-64zM320 32c-17.7 0-32 14.3-32 32s14.3 32 32 32l64 0 0 64c0 17.7 14.3 32 32 32s32-14.3 32-32l0-96c0-17.7-14.3-32-32-32l-96 0zM448 352c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 64-64 0c-17.7 0-32 14.3-32 32s14.3 32 32 32l96 0c17.7 0 32-14.3 32-32l0-96z"/></svg></button>
+        </div>
+
+
+        <div id="lyricNav" class="fullScreenElement">
+            <button id="backNavButton" onclick="goToPreviousLyrics()"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="#ffffff" d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg> </button>
+            <button id="nextNavButton" onclick="goToNextLyrics()"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="#ffffff" d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg> </button>
+        </div>
+
+    </body>
+</html>
+
+<script>
+ function getCookie(cname) {
+     let name = cname + "=";
+     let ca = document.cookie.split(';');
+     for(let i = 0; i < ca.length; i++) {
+         let c = ca[i];
+         while (c.charAt(0) == ' ') {
+             c = c.substring(1);
+         }
+         if (c.indexOf(name) == 0) {
+             return c.substring(name.length, c.length);
+         }
+     }
+     return "";
+}
+var lyrics = getCookie("lyrics").split("\\").join("\n")
+ if (lyrics == "" || lyrics == null) {
+     location = "/"
+ }
+ document.documentElement.style.backgroundColor = getCookie("backgroundcolor")
+ document.getElementById('container').style.backgroundColor = getCookie("backgroundcolor")
+
+ var lyricBox = document.getElementById('lyrics')
+
+ var count = 0
+ lyrics.split('\n').forEach((v, i) => {
+     if (i === 0) {
+         document.title = v
+     }
+     lyricBox.append(
+         Object.assign(
+         document.createElement('p'),
+         { id: v === "" ? "" : v[0] === "[" ? "" : count, classList: ["lyrics"],
+           innerHTML: v}));
+     if (v !== "" && v[0] !== "[") {
+        count += 1
+     }
+ })
+ document.getElementById(0).classList.add('activated-lyrics')
+
+ document.getElementById(0).scrollIntoView({
+     behavior: 'auto',
+     block: 'center',
+     inline: 'center'
+ });
+
+ toggleFullscreenELementVisibility()
+
+ maximumCount = count - 1
+ count = 0
+ function goToNextLyrics() {
+     if (count == maximumCount) return
+     count += 1
+     reRenderLyrics()
+ }
+ function goToPreviousLyrics() {
+     if (count == 0) return
+     count -= 1
+     reRenderLyrics()
+ }
+ function reRenderLyrics() {
+     var workingClassList = count === 0 ? null : document.getElementById((count - 1)).classList
+     if (workingClassList != null) {
+         workingClassList.remove('activated-lyrics')
+     }
+
+     var workingClassList = count === maximumCount ? null : document.getElementById((count + 1)).classList
+     if (workingClassList != null) {
+         workingClassList.remove('activated-lyrics')
+     }
+
+     var workingClassList = document.getElementById(count).classList
+     workingClassList.add('activated-lyrics')
+
+     document.getElementById(count).scrollIntoView({
+         behavior: 'auto',
+         block: 'center',
+         inline: 'center'
+     });
+
+
+ }
+
+ this.addEventListener('keydown', event => {
+     if (event.keyCode == 39 || event.keyCode == 34) {
+         goToNextLyrics()
+     }
+     if (event.keyCode == 37 || event.keyCode == 33) {
+         goToPreviousLyrics()
+     }
+     if (event.keyCode == 35) {
+         count = maximumCount
+         reRenderLyrics()
+     }
+     if (event.keyCode == 36) {
+         count = 0
+         reRenderLyrics()
+     }
+ })
+
+ function toggleFullscreenELementVisibility() {
+     if (!window.fullScreen) {
+         var fullScreenElements = document.getElementsByClassName("fullScreenElement")
+         for (var i = 0; i < fullScreenElements.length; i++) {
+             fullScreenElements[i].classList.remove("hideFullScreen")
+         }
+     } else {
+         var fullScreenElements = document.getElementsByClassName("fullScreenElement")
+         for (var i = 0; i < fullScreenElements.length; i++) {
+             fullScreenElements[i].classList.add("hideFullScreen")
+         }
+     }
+ }
+
+ window.addEventListener('resize', toggleFullscreenELementVisibility)
+
+</script>

@@ -1,0 +1,252 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="preconnect" href="https://rsms.me/">
+        <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+        <link rel="icon" type="image/x-icon" href="favicon.svg">
+        <title>Song Prompter</title>
+        <style>
+          body {
+             background-color: black;
+             color: white;
+             display: flex;
+              justify-content: center;
+              font-family: Inter, sans-serif;
+              font-weight: bold;
+              text-align: center;
+          }
+         #container {
+             width: 100%
+             justify-content: center
+         }
+          #title {
+              margin-top: 4.5rem;
+             font-size: 3rem;
+              margin-bottom: 0rem;
+          }
+         #textbox {
+             margin-top: 3rem;
+         }
+         #help-link {
+             color: #52adadff;
+             font-style: normal;
+             text-decoration: none;
+             width: 80%
+         }
+         #text-input {
+             background-color: #1a1a1aff;
+             border-color: #00000000;
+             color: white;
+             resize: none;
+             border-radius: 14.909px;
+             padding-left: 0.7rem;
+             padding-top: 0.7rem;
+             padding-bottom: 0.7rem;
+             padding-right: 0.7rem;
+             border-color: #333333;
+             border-width: 3px;
+             border-style: solid;
+             outline: none;
+         }
+         #formatting-options {
+             display: flex;
+             justify-content: center;
+             align-items: center;
+             flex-direction: row;
+         }
+         #backgroundcolor {
+             margin-left: 1rem;
+             background-color: #00000000;
+             border-color: #00000000;
+             color: #00000000;
+         }
+         #startbutton {
+             margin-top: 5rem;
+             margin-bottom: 5rem;
+             width: 15rem;
+             height: 4rem;
+             font-family: Inter, sans-serif;
+             font-size: 1.5rem;
+             border-radius: 17px;
+             align-content: center;
+             font-weight: bold;
+             color: white;
+             border-color: #00000000;
+             background-color: #f6145e;
+         }
+         #startbutton:hover {
+             background-color: #e5034d;
+         }
+         #help-div {
+             width: 80%;
+             text-align: left;
+             margin-left: 10%;
+             font-size: 1rem;
+         }
+         #help-div > p {
+             font-size: 1rem;
+             font-weight: 400;
+         }
+         #github-text {
+             color: #dddddd;
+             text-align: right;
+             font-family: Inter, sans-serif;
+             margin-right: 5%;
+             font-size: 0.9rem;
+             font-weight: 500;
+         }
+         #github-text > a {
+             color: #aaaaaa;
+             text-decoration: none;
+         }
+          /* TEXTAREA AUTO RESIZE STYLES BEGIN - thanks to Impressive Webs, the original creator of the expanding text box */
+          /* the styles for 'txta' are applied to both the textarea and the hidden clone */
+          /* these must be the same for both */
+         .txta {
+             width: 60%;
+             min-height: 100px;
+             font-family: Inter, sans-serif;
+             font-size: 16px;
+             overflow: hidden;
+             line-height: 1.4;
+        }
+         /* TEXTAREA AUTO RESIZE STYLES END */
+          </style>
+    </head>
+    <body>
+        <div id="container">
+            <p id="title">Song Prompter</p>
+            <a href="#help-text" id="help-link">What is this?</a>
+            <div id="textbox">
+                <textarea class="txta" id="text-input" rows="1" placeholder="Paste your lyrics here..."></textarea>
+                <div id="formatting-options">
+                    <p>Background Color:</p><input type="color" value="#f6145e" id="backgroundcolor" onchange="changeStartButtonColor()">
+                </div>
+            </div>
+            <button id="startbutton" onclick="startSongPrompter()">Start the Song!</button>
+            <div id="help-div">
+                <h1 id="help-text">What is this?</h1>
+                <p>This is an online tool to help you with any time you want to host a sing along or similar. You can paste the lyrics in here from any website where they're written, and choose your preferred background color and alignment. </p>
+                <p>Once you start the song, the first line will be highlighted. Once you sing that line, you can highlight the next line with your keyboard arrows. You can then screen share to any large screen, such as a TV or projector.</p>
+            </div>
+            <div style="height: 10rem;"></div>
+            <div id="github-text">
+                This website is Open Source Software. You can view the source code <a href="https://github.com/muhdsalm/Song-Prompter">here</a>.
+            </div>
+        </div>
+    </body>
+</html>
+<script>
+ if (getCookie("lyrics") != "" && getCookie("lyrics") != null) {
+     document.getElementById("text-input").value = getCookie("lyrics").split("\\").join("\n")
+ }
+ if (getCookie("backgroundcolor") != "" && getCookie("backgroundcolor") != null) {
+     document.getElementById("backgroundcolor").value = getCookie("backgroundcolor")
+     document.getElementById("startbutton").style.backgroundColor = getCookie("backgroundcolor")
+ }
+function changeStartButtonColor() {
+     console.log("CHanging color to " + document.getElementById("backgroundcolor").value)
+     document.getElementById("startbutton").style.backgroundColor = document.getElementById("backgroundcolor").value
+ }
+ function startSongPrompter() {
+     lyrics = document.getElementById("text-input").value
+     if (lyrics == "") {
+         return
+     }
+     bgColor = document.getElementById("backgroundcolor").value
+     setCookie("lyrics", lyrics.split('\n').join("\\"))
+     setCookie("backgroundcolor", bgColor)
+     console.log(document.cookie)
+     location.href = "app.html"
+ }
+ function setCookie(cname, cvalue) {
+     document.cookie = cname + "=" + cvalue + ";" + ";path=/";
+}
+ function getCookie(cname) {
+     let name = cname + "=";
+     let ca = document.cookie.split(';');
+     for(let i = 0; i < ca.length; i++) {
+         let c = ca[i];
+         while (c.charAt(0) == ' ') {
+             c = c.substring(1);
+         }
+         if (c.indexOf(name) == 0) {
+             return c.substring(name.length, c.length);
+         }
+     }
+     return "";
+}
+</script>
+<script>
+// Targets all textareas with class "txta"
+let textareas = document.querySelectorAll('.txta'),
+    hiddenDiv = document.createElement('div'),
+    content = null;
+
+// Adds a class to all textareas
+for (let j of textareas) {
+  j.classList.add('txtstuff');
+}
+
+// Build the hidden div's attributes
+
+// The line below is needed if you move the style lines to CSS
+// hiddenDiv.classList.add('hiddendiv');
+
+// Add the "txta" styles, which are common to both textarea and hiddendiv
+// If you want, you can remove those from CSS and add them via JS
+hiddenDiv.classList.add('txta');
+
+// Add the styles for the hidden div
+// These can be in the CSS, just remove these three lines and uncomment the CSS
+hiddenDiv.style.display = 'none';
+hiddenDiv.style.whiteSpace = 'pre-wrap';
+hiddenDiv.style.wordWrap = 'break-word';
+
+function resize_textarea(i) {
+      
+      // Append hiddendiv to parent of textarea, so the size is correct
+      i.parentNode.appendChild(hiddenDiv);
+      
+      // Remove this if you want the user to be able to resize it in modern browsers
+      i.style.resize = 'none';
+      
+      // This removes scrollbars
+      i.style.overflow = 'hidden';
+
+      // Every input/change, grab the content
+      content = i.value;
+
+      // Add the same content to the hidden div
+      
+      // This is for old IE
+      content = content.replace(/\n/g, '<br>');
+      
+      // The <br ..> part is for old IE
+      // This also fixes the jumpy way the textarea grows if line-height isn't included
+      hiddenDiv.innerHTML = content + '<br style="line-height: 3px;">';
+
+      // Briefly make the hidden div block but invisible
+      // This is in order to read the height
+      hiddenDiv.style.visibility = 'hidden';
+      hiddenDiv.style.display = 'block';
+      i.style.height = hiddenDiv.offsetHeight + 'px';
+
+      // Make the hidden div display:none again
+      hiddenDiv.style.visibility = 'visible';
+      hiddenDiv.style.display = 'none';
+    }
+
+// Loop through all the textareas and add the event listener
+for(let i of textareas) {
+     if (!(getCookie("lyrics") == null || getCookie("lyrics") == "")) {
+         resize_textarea(i)
+     }
+  (function(i) {
+    // Note: Use 'keyup' instead of 'input'
+    // if you want older IE support
+    i.addEventListener('input', resize_textarea(i));
+  })(i);
+}
+</script>
