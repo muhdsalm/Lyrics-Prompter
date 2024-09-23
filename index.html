@@ -246,7 +246,7 @@ for(let i of textareas) {
   (function(i) {
     // Note: Use 'keyup' instead of 'input'
     // if you want older IE support
-    i.addEventListener('input', resize_textarea(i));
+    i.addEventListener('input', function() { resize_textarea(i) });
   })(i);
 }
 </script>
