@@ -114,6 +114,18 @@
          #lyricNav > button > svg {
              width: 1rem;
          }
+         #tabletTouchZones {
+             position: fixed;
+             top: 3rem;
+             width: 100%;
+             height: 100%;
+             display: flex;
+             justify-content: space-around;
+         }
+         #tabletTouchZones > div {
+             width: 50%;
+             height: 100%;
+         }
         </style>
     </head>
     <body>
@@ -131,7 +143,12 @@
             </div>
         </div>
 
-        <div id="lyrics" onclick="goToNextLyrics()">
+        <div id="lyrics">
+        </div>
+
+        <div id="tabletTouchZones">
+            <div onclick="goToPreviousLyrics()"></div>
+            <div onclick="goToNextLyrics()"></div>
         </div>
 
         <div id="fullScreenButton" class="fullScreenElement" onclick="document.documentElement.requestFullscreen()">
