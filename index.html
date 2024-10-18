@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
     <head>
@@ -139,13 +138,18 @@
     </body>
 </html>
 <script>
- if (getCookie("lyrics") != "" && getCookie("lyrics") != null) {
-     document.getElementById("text-input").value = getCookie("lyrics").split("\\").join("\n")
+ if (sessionStorage.getItem("lyrics") != null) document.getElementById("text-input").value = sessionStorage.getItem("lyrics").split("\\").join("\n")
+ else document.getElementById("text-input").value = localStorage.getItem("lyrics").split("\\").join("\n")
+
+ if (sessionStorage.getItem("backgroundcolor") != null) {
+     document.getElementById("backgroundcolor").value = sessionStorage.getItem("backgroundcolor")
+     document.getElementById("startbutton").style.backgroundColor = sessionStorage.getItem("backgroundcolor")
  }
- if (getCookie("backgroundcolor") != "" && getCookie("backgroundcolor") != null) {
-     document.getElementById("backgroundcolor").value = getCookie("backgroundcolor")
-     document.getElementById("startbutton").style.backgroundColor = getCookie("backgroundcolor")
+ else if (localStorage.getItem("backgroundcolor") != null) {
+     document.getElementById("backgroundcolor").value = localStorage.getItem("backgroundcolor")
+     document.getElementById("startbutton").style.backgroundColor = localStorage.getItem("backgroundcolor")
  }
+
 function changeStartButtonColor() {
      console.log("CHanging color to " + document.getElementById("backgroundcolor").value)
      document.getElementById("startbutton").style.backgroundColor = document.getElementById("backgroundcolor").value
@@ -156,27 +160,12 @@ function changeStartButtonColor() {
          return
      }
      bgColor = document.getElementById("backgroundcolor").value
-     setCookie("lyrics", lyrics.split('\n').join("\\"))
-     setCookie("backgroundcolor", bgColor)
+     localStorage.setItem("lyrics", lyrics.split('\n').join("\\"))
+     localStorage.setItem("backgroundcolor", bgColor)
+     sessionStorage.setItem("lyrics", lyrics.split('\n').join("\\"))
+     sessionStorage.setItem("backgroundcolor", bgColor)
      console.log(document.cookie)
      location.href = "app.html"
- }
- function setCookie(cname, cvalue) {
-     document.cookie = cname + "=" + cvalue + ";" + ";path=/";
-}
- function getCookie(cname) {
-     let name = cname + "=";
-     let ca = document.cookie.split(';');
-     for(let i = 0; i < ca.length; i++) {
-         let c = ca[i];
-         while (c.charAt(0) == ' ') {
-             c = c.substring(1);
-         }
-         if (c.indexOf(name) == 0) {
-             return c.substring(name.length, c.length);
-         }
-     }
-     return "";
 }
 </script>
 <script>

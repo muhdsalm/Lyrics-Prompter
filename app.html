@@ -164,26 +164,12 @@
 </html>
 
 <script>
- function getCookie(cname) {
-     let name = cname + "=";
-     let ca = document.cookie.split(';');
-     for(let i = 0; i < ca.length; i++) {
-         let c = ca[i];
-         while (c.charAt(0) == ' ') {
-             c = c.substring(1);
-         }
-         if (c.indexOf(name) == 0) {
-             return c.substring(name.length, c.length);
-         }
-     }
-     return "";
-}
-var lyrics = getCookie("lyrics").split("\\").join("\n")
+var lyrics = sessionStorage.getItem("lyrics").split("\\").join("\n")
  if (lyrics == "" || lyrics == null) {
      location = "/"
  }
- document.documentElement.style.backgroundColor = getCookie("backgroundcolor")
- document.getElementById('container').style.backgroundColor = getCookie("backgroundcolor")
+ document.documentElement.style.backgroundColor = sessionStorage.getItem("backgroundcolor")
+ document.getElementById('container').style.backgroundColor = sessionStorage.getItem("backgroundcolor")
 
  var lyricBox = document.getElementById('lyrics')
 
